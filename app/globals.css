@@ -2,43 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Base gradient for desktop */
-html, body, :root { 
+/* Enhanced gradient with more contrast - using fixed pseudo-element to prevent seams */
+html, :root { 
   height: 100%; 
-  background: radial-gradient(ellipse 80% 50% at 50% 0%, #0d1117 0%, #010409 100%);
-  background-attachment: fixed;
-  background-size: 100% 100%;
   /* Prevent white overscroll on mobile */
   overscroll-behavior-y: none;
   /* Force dark color scheme for Android system UI */
   color-scheme: dark;
 }
 
-/* Mobile: simpler gradient that works better */
-@media (max-width: 768px) {
-  html, body, :root {
-    background: linear-gradient(to bottom, #0d1117 0%, #010409 100%);
-    background-attachment: scroll; /* Better mobile support */
-    min-height: 100vh;
-  }
-}
-
 body { 
   @apply text-neutral-300 antialiased;
-  background: transparent;
   min-height: 100%;
-  /* Ensure dark background shows during overscroll */
+  /* Base background color (fallback) */
   background-color: #010409;
   /* Explicitly set color scheme */
   color-scheme: dark;
+  position: relative;
 }
 
-/* Prevent white flash during overscroll on mobile */
-@supports (-webkit-touch-callout: none) {
-  body {
-    /* iOS Safari specific */
-    background: linear-gradient(to bottom, #0d1117 0%, #010409 100%);
-  }
+/* Fixed gradient overlay that stays in place while scrolling */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* More visible gradient: lighter at top (#161b22), darker at bottom (#010409) */
+  background: radial-gradient(ellipse 80% 50% at 50% 0%, #161b22 0%, #0d1117 50%, #010409 100%);
+  background-size: 100% 100%;
+  z-index: -1;
+  pointer-events: none;
 }
 
 .container-narrow { @apply max-w-3xl mx-auto px-4; }
