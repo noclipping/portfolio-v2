@@ -16,7 +16,7 @@ export default async function BlogListPage() {
     const allPostsResult = await supabase.from("posts").select("*").limit(100);
 
     // Try direct filter first
-    let postsResult = await supabase
+    const postsResult = await supabase
       .from("posts")
       .select("title, subtitle, cover_image_url, published_at, slug")
       .eq("published", true)
@@ -29,26 +29,24 @@ export default async function BlogListPage() {
       // Only include posts where published is explicitly true
       const publishedOnly = all.filter((p: any) => p.published === true);
 
-      postsResult = {
-        data: publishedOnly
-          .map((p: any) => ({
-            title: p.title,
-            subtitle: p.subtitle,
-            cover_image_url: p.cover_image_url,
-            published_at: p.published_at,
-            slug: p.slug,
-          }))
-          .sort(
-            (a: any, b: any) =>
-              new Date(b.published_at || 0).getTime() -
-              new Date(a.published_at || 0).getTime()
-          ),
-        error: null,
-      };
+      posts = publishedOnly
+        .map((p: any) => ({
+          title: p.title,
+          subtitle: p.subtitle,
+          cover_image_url: p.cover_image_url,
+          published_at: p.published_at,
+          slug: p.slug,
+        }))
+        .sort(
+          (a: any, b: any) =>
+            new Date(b.published_at || 0).getTime() -
+            new Date(a.published_at || 0).getTime()
+        );
+      error = null;
+    } else {
+      posts = postsResult.data;
+      error = postsResult.error;
     }
-
-    posts = postsResult.data;
-    error = postsResult.error;
   } catch (err) {
     console.error("BlogListPage error:", err);
     error = err as Error;

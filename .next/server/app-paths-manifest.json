@@ -3,8 +3,5 @@
   "/admin/page": "app/admin/page.js",
   "/blog/page": "app/blog/page.js",
   "/resume/page": "app/resume/page.js",
-  "/blog/[slug]/page": "app/blog/[slug]/page.js",
-  "/api/admin/posts/route": "app/api/admin/posts/route.js",
-  "/api/admin/portfolio/route": "app/api/admin/portfolio/route.js",
-  "/api/admin/experience/route": "app/api/admin/experience/route.js"
+  "/blog/[slug]/page": "app/blog/[slug]/page.js"
 }

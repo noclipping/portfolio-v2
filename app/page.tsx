@@ -50,7 +50,7 @@ export default async function HomePage() {
     console.log("Homepage - All posts:", allPostsCheck.data?.length || 0);
 
     // Try query with filter
-    let postsResult = await supabase
+    const postsResult = await supabase
       .from("posts")
       .select("title, subtitle, cover_image_url, published_at, slug")
       .eq("published", true)
@@ -87,11 +87,12 @@ export default async function HomePage() {
         )
         .slice(0, 3);
 
-      postsResult = { data: filtered, error: null };
+      posts = filtered;
+      postsError = null;
+    } else {
+      posts = postsResult.data;
+      postsError = postsResult.error;
     }
-
-    posts = postsResult.data;
-    postsError = postsResult.error;
 
     if (postsError) {
       console.error("Posts query error:", postsError);
