@@ -6,6 +6,8 @@ export const metadata: Metadata = {
   title: "Devon Selvaggi",
   description: "Founder / Operator portfolio and blog",
   metadataBase: new URL("https://www.devonselvaggi.com"),
+  themeColor: "#010409",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({
@@ -16,6 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Theme color for Android system UI (status bar + navigation bar) */}
+        <meta name="theme-color" content="#010409" />
+        <meta name="color-scheme" content="dark" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"

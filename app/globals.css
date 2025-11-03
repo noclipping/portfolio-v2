@@ -2,17 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Base gradient for desktop */
 html, body, :root { 
   height: 100%; 
   background: radial-gradient(ellipse 80% 50% at 50% 0%, #0d1117 0%, #010409 100%);
   background-attachment: fixed;
   background-size: 100% 100%;
+  /* Prevent white overscroll on mobile */
+  overscroll-behavior-y: none;
+  /* Force dark color scheme for Android system UI */
+  color-scheme: dark;
+}
+
+/* Mobile: simpler gradient that works better */
+@media (max-width: 768px) {
+  html, body, :root {
+    background: linear-gradient(to bottom, #0d1117 0%, #010409 100%);
+    background-attachment: scroll; /* Better mobile support */
+    min-height: 100vh;
+  }
 }
 
 body { 
   @apply text-neutral-300 antialiased;
   background: transparent;
   min-height: 100%;
+  /* Ensure dark background shows during overscroll */
+  background-color: #010409;
+  /* Explicitly set color scheme */
+  color-scheme: dark;
+}
+
+/* Prevent white flash during overscroll on mobile */
+@supports (-webkit-touch-callout: none) {
+  body {
+    /* iOS Safari specific */
+    background: linear-gradient(to bottom, #0d1117 0%, #010409 100%);
+  }
 }
 
 .container-narrow { @apply max-w-3xl mx-auto px-4; }
